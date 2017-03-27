@@ -1,0 +1,63 @@
+$border-radius: 3px;
+$input-padding: 6px;
+
+html, body {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 1rem;
+}
+
+html {
+	 -webkit-box-sizing: border-box; 
+	-moz-box-sizing: border-box; 
+	box-sizing: border-box;
+}
+*, *:before, *:after {
+	-webkit-box-sizing: inherit;
+	-moz-box-sizing: inherit;
+	box-sizing: inherit;
+}
+
+.textboxlist {
+	padding: $input-padding;
+	border: 1px solid #999;
+	border-radius: $border-radius;
+	display: flex;
+	cursor: text;
+
+	> * {
+		margin-right: $input-padding;
+	}
+
+	.tag {
+		flex: 0;
+		padding: $input-padding;
+		border-radius: $border-radius;
+		background-color: #2980b9;
+		color: white;
+	}
+
+	.editing {
+		padding: $input-padding - 1px;
+		border: 1px solid #2980b9;
+		background-color: white;
+		color: black;
+		border-radius: $border-radius;
+	}
+
+	.leftover {
+		flex: 1;
+		margin-right: 0;
+	}
+
+	input {
+		border: 0;
+		margin: 0 $input-padding 0 0;
+		line-height: 1rem;
+		font-size: inherit;
+		font-family: inherit;
+		color: inherit;
+		outline: none;
+	}
+}
