@@ -8,6 +8,12 @@
 	// Define our constructor
 	this.TextboxList = function(elem, options) {
 		this._elem = elem;
+		
+		var leftover = document.createElement('input');
+		leftover.class += ' leftover';
+		leftover.type = 'text';
+
+		this._elem.appendChild(leftover);
 
 		this._options = defaults;
 		for (var property in options) {
@@ -58,6 +64,8 @@
 				newValue = child.value;
 			} else if (child.textContent){
 				newValue = child.textContent;
+			} else {
+				newValue = '';
 			}
 
 			newValue = newValue.trim();
@@ -82,6 +90,12 @@
 		for (var j = 0; j < newValues.length; j++) {
 			this.appendTag(newValues[j]);
 		}
+
+		var leftover = document.createElement('input');
+		leftover.className += ' leftover';
+		leftover.type = 'text';
+
+		this._elem.appendChild(leftover);
 
 		return this;
 	};
@@ -122,6 +136,7 @@
 
 		tagElem.replaceWith(input);
 		input.focus();
+		input.select();
 
 		return input;
 	}
