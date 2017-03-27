@@ -137,15 +137,15 @@
 		tagElem.replaceWith(input);
 		input.focus();
 		input.select();
-
-		return input;
 	}
 
 	function commitInput(inputElem){
-		var tag = createTag(inputElem.value);
-		inputElem.replaceWith(tag);
-
-		return tag;
+		if (inputElem.value.trim()){
+			var tag = createTag(inputElem.value);
+			inputElem.replaceWith(tag);
+		} else {
+			inputElem.parentNode.removeChild(inputElem);
+		}
 	}
 
 	var myTBL = new TextboxList(document.getElementById('textboxlist'));

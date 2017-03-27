@@ -28,19 +28,20 @@ html {
 
 	> * {
 		margin-right: $input-padding;
+		line-height: 1rem;
+		padding: $input-padding;
+		border: 0;
+		font-family: inherit;
+		font-size: inherit;
 	}
 
 	.tag {
-		padding: $input-padding;
-		border-radius: $border-radius;
-		border: 0;
 		background-color: #2980b9;
+		border-radius: $border-radius;
 		color: white;
 	}
 
 	.editing {
-		padding: $input-padding;
-		border: none;
 		background-color: inherit;
 		color: inherit;
 	}
