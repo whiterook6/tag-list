@@ -1,100 +1,44 @@
-// Create an immediately invoked functional expression to wrap our code
-(function() {
+angular.module('myApp', [])
+	.controller('TagListController', function() {
+		var ctrl = this;
 
-	var defaults = {
-		unique: true
-	};
+		ctrl.editing = 3;
 
-	// Define our constructor
-	this.TextboxList = function(elem, options) {
-		this.elem = elem;
-		this.options = defaults;
-		for (var property in options) {
-			if (options.hasOwnProperty(property)) {
-				this.options[property] = options[property];
-			}
-		}
-	
-		this._values = [];
-	};
+		ctrl.tags = [{
+			text: 'tag 1',
+		}, {
+			text: 'tag 2',
+		}, {
+			text: 'tag 3',
+		}, {
+			text: 'tag 4',
+		}, {
+			text: 'tag 5',
+		}, {
+			text: 'tag 6',
+		}, {
+			text: 'tag 7',
+		}, {
 
-	// getter/setter for values
-	TextboxList.prototype.values = function(values) {
-		if (!values){ // get
-			return this._values;
+		}];
 
-		// set (check for options.unique)
-		} else if (this.options.unique){
-
-			// set unique elements only
-			this._values = values.filter(function(item, i, ar){
-				return ar.indexOf(item) === i;
-			});
-			return this;
-
-		} else {
-
-			// set all elements
-			this._values = values;
-			return this;
-		}
-	};
-
-	TextboxList.prototype.commit = function(){
-		var children = this.elem.childNodes;
-		var newValues = [];
-
-		// collect the values of all the tags and inputs:
-		for (var i = 0; i <= children.length; i++) {
-			var child = children[i];
-			if (!child){
-				continue;
-			}
-
-			var newValue;
-
-			if (child.value){
-				newValue = child.value;
-			} else if (child.textContent){
-				newValue = child.textContent;
-			}
-
-			newValue = newValue.trim();
-			if (newValue){
-				newValues.push(newValue);
-			}
-		}
-
-		this.values(newValues);
-		newValues = this.values();
-		// empty the element:
-		while (this.elem.firstChild) {
-			this.elem.removeChild(this.elem.firstChild);
-		}
-
-		// if there's no values, we're nearly done.
-		if (newValues.length === 0){
-			return;
-		}
-
-		// otherwise create a tag for each element:
-		for (var j = 0; j < newValues.length; j++) {
-			this.appendTag(newValues[j]);
-		}
-	};
-
-	TextboxList.prototype.appendTag = function(text){
-		var tag = document.createElement('span');
-
-		tag.className += "tag";
-		tag.textContent = text;
-		tag.onclick = function(){
-			debugger;
+		ctrl.edit = function(which){
+			ctrl.reduce_tags();
+			ctrl.editing = which;
 		};
 
-		this.elem.appendChild(tag);
-	};
+		ctrl.append_tag = function(){
+			ctrl.tags.push('');
+			ctrl.editing = ctrl.tags.length - 1;
+		};
 
-	var myTBL = new TextboxList(document.getElementById('textboxlist'));
-	myTBL.commit();
-}());
+		ctrl.commit = function(){
+			ctrl.editing = -1;
+		};
+
+		ctrl.reduce_tags = function(){
+			ctrl.tags = ctrl.tags.filter(function(item, i, ar){
+				return ar.indexOf(item) === i;
+			});
+		};
+	});

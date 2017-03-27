@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html ng-app="myApp">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Textboxlist Demo</title>
@@ -8,20 +8,21 @@
 </head>
 
 <body>
-	<div class="textboxlist" id="textboxlist">
-		<span class="tag">Tag1</span>
-		<span class="tag">Tag2</span>
-		<input class="editing" type="text" value="Tag3" />
-
-		<input class="editing" type="text" value="Tag3" />
-		
-		<input class="editing" type="text" value="Tag3" />
-		<span class="tag"></span>
-		<input class="editing" type="text" value="Tag4" />
-		<span class="tag">Tag5</span>
-		<span class="leftover"><span>
+	<div class="textboxlist" ng-controller="TagListController as ctrl">
+		<span class="tag"
+			ng-repeat-start="tag in ctrl.tags track by $index"
+			ng-if="$index != ctrl.editing"
+			ng-bind="tag.text"
+			ng-click="ctrl.edit($index)"></span>
+		<input class="editing"
+			ng-model="tag.text"
+			ng-if="$index == ctrl.editing"
+			ng-repeat-end/>
+		<span class="leftover"
+			ng-click="ctrl.append_tag()"><span>
 	</div>
 
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular.min.js"></script>
 	<script src="script.js"></script>
 </body>
 </html>
