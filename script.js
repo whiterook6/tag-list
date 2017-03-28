@@ -8,20 +8,33 @@
 	// Define our constructor
 	this.TextboxList = function(elem, options) {
 		this._elem = elem;
+
+		// empty the target
+		while (this._elem.firstChild) {
+			this._elem.removeChild(this._elem.firstChild);
+		}
 		
-		var leftover = document.createElement('input');
-		leftover.class += ' leftover';
-		leftover.type = 'text';
+		// add the place for buttons
+		this._tags = document.createElement('span');
+		this._tags.className += ' tags';
+		this._elem.appendChild(this._tags);
 
-		this._elem.appendChild(leftover);
+		// add the leftover input that will fill the remaining space,
+		// allowing for user to click to type anywhere there's room
+		this._leftover = document.createElement('input');
+		this._leftover.className += ' leftover';
+		this._leftover.type = 'text';
+		this._elem.appendChild(this._leftover);
 
+		// use options
 		this._options = defaults;
 		for (var property in options) {
 			if (options.hasOwnProperty(property)) {
 				this._options[property] = options[property];
 			}
 		}
-	
+
+		//
 		this._values = [];
 	};
 
@@ -48,22 +61,24 @@
 	};
 
 	TextboxList.prototype.commit = function(){
-		var children = this._elem.childNodes;
+
+		// go through all the tags: get the span containing them
+		var tags = this._tags;
 		var newValues = [];
 
 		// collect the values of all the tags and inputs:
-		for (var i = 0; i <= children.length; i++) {
-			var child = children[i];
-			if (!child){
+		for (var i = 0; i <= tags.childNodes.length; i++) {
+			var tag = tags.childNodes[i];
+			if (!tag){
 				continue;
 			}
 
 			var newValue;
 
-			if (child.value){
-				newValue = child.value;
-			} else if (child.textContent){
-				newValue = child.textContent;
+			if (tag.value){
+				newValue = tag.value;
+			} else if (tag.textContent){
+				newValue = tag.textContent;
 			} else {
 				newValue = '';
 			}
@@ -77,8 +92,8 @@
 		this.values(newValues);
 		newValues = this.values();
 		// empty the element:
-		while (this._elem.firstChild) {
-			this._elem.removeChild(this._elem.firstChild);
+		while (this._tags.firstChild) {
+			this._tags.removeChild(this._tags.firstChild);
 		}
 
 		// if there's no values, we're nearly done.
@@ -91,18 +106,12 @@
 			this.appendTag(newValues[j]);
 		}
 
-		var leftover = document.createElement('input');
-		leftover.className += ' leftover';
-		leftover.type = 'text';
-
-		this._elem.appendChild(leftover);
-
 		return this;
 	};
 
 	TextboxList.prototype.appendTag = function(text){
 		var tag = createTag(text);
-		this._elem.appendChild(tag);
+		this._tags.appendChild(tag);
 		return tag;
 	};
 

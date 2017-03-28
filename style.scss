@@ -9,7 +9,7 @@ html, body {
 }
 
 html {
-	 -webkit-box-sizing: border-box; 
+	-webkit-box-sizing: border-box; 
 	-moz-box-sizing: border-box; 
 	box-sizing: border-box;
 }
@@ -20,44 +20,46 @@ html {
 }
 
 .textboxlist {
-	padding: $input-padding;
-	border: 1px solid #999;
 	border-radius: $border-radius;
+	border: 1px solid #999;
 	display: flex;
-	cursor: text;
+	line-height: 1rem;
+	padding: $input-padding;
 
-	> * {
-		margin-right: $input-padding;
-		line-height: 1rem;
-		padding: $input-padding;
-		border: 0;
-		font-family: inherit;
-		font-size: inherit;
-	}
+	.tags {
+		flex-grow: 0;
+		padding: 0;
+		margin: 0;
 
-	.tag {
-		background-color: #2980b9;
-		border-radius: $border-radius;
-		color: white;
-	}
+		> * {
+			border: 0;
+			cursor: text;
+			font-family: inherit;
+			font-size: inherit;
+			line-height: 1rem;
+			margin: 0 $input-padding 0 0;
+		}
 
-	.editing {
-		background-color: inherit;
-		color: inherit;
+		.tag {
+			background-color: #2980b9;
+			border-radius: $border-radius;
+			color: white;
+			padding: $input-padding;
+		}
 	}
 
 	.leftover {
 		flex: 1;
-		margin-right: 0;
+		
 	}
 
 	input {
 		border: 0;
-		margin: 0 $input-padding 0 0;
-		line-height: 1rem;
-		font-size: inherit;
-		font-family: inherit;
 		color: inherit;
+		font-family: inherit;
+		font-size: inherit;
+		line-height: 1rem;
+		margin: 0 $input-padding 0 0;
 		outline: none;
 	}
 }
