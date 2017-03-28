@@ -24,7 +24,16 @@
 		this._leftover = document.createElement('input');
 		this._leftover.className += ' leftover';
 		this._leftover.type = 'text';
+		this._leftover._tbl = this;
 		this._elem.appendChild(this._leftover);
+		this._leftover.onblur = function(){
+			if (!this.value.trim()){
+				return;
+			}
+
+			this._tbl.appendTag(this.value.trim());
+			this.value = '';
+		}
 
 		// use options
 		this._options = defaults;
@@ -137,6 +146,11 @@
 			commitInput(input);
 		};
 
+		input.style.width = getInputWidth(input) + 'px';
+		input.oninput = function(){
+			input.style.width = getInputWidth(input) + 'px';
+		}
+
 		return input;
 	}
 
@@ -145,7 +159,7 @@
 
 		tagElem.replaceWith(input);
 		input.focus();
-		input.select();
+		
 	}
 
 	function commitInput(inputElem){
@@ -155,6 +169,20 @@
 		} else {
 			inputElem.parentNode.removeChild(inputElem);
 		}
+	}
+
+	function getInputWidth(inputElem){
+		var tmp = document.createElement("span"),
+			theWidth;
+		tmp.className = "input-element tmp-element";
+		tmp.textContent = inputElem.value;
+		tmp.style.paddingLeft = '6px';
+		tmp.style.paddingRight = '6px';
+		document.body.appendChild(tmp);
+
+		theWidth = tmp.getBoundingClientRect().width;
+		document.body.removeChild(tmp);
+		return theWidth;
 	}
 
 	var myTBL = new TextboxList(document.getElementById('textboxlist'));
