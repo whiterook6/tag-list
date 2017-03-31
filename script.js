@@ -34,6 +34,25 @@
 			this._tbl.appendTag(this.value.trim());
 			this.value = '';
 		}
+		this._leftover.onkeydown = function(event){
+			if (!this.value.trim()){
+				return;
+			}
+
+			var BACKSPACEKEY = 8,
+				TABKEY = 9,
+				ENTERKEY = 13,
+				ESCAPEKEY = 27;
+
+			switch (event.keyCode){
+				case TABKEY:
+				case ENTERKEY:
+					this._tbl.appendTag(this.value.trim());
+					this.value = '';
+					event.preventDefault();
+					break;
+			}
+		}
 
 		// use options
 		this._options = defaults;
@@ -149,6 +168,17 @@
 		input.style.width = getInputWidth(input) + 'px';
 		input.oninput = function(){
 			input.style.width = getInputWidth(input) + 'px';
+		}
+
+		input.onkeyup = function(event){
+			var BACKSPACE = 8;
+			if (event.keyCode === BACKSPACE){
+				if (this.value == ''){
+					if (this.previousSibling){
+						this.previousSibling.focus();
+					}
+				}
+			}
 		}
 
 		return input;
