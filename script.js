@@ -39,8 +39,7 @@
 				return;
 			}
 
-			var BACKSPACEKEY = 8,
-				TABKEY = 9,
+			var TABKEY = 9,
 				ENTERKEY = 13,
 				ESCAPEKEY = 27;
 
@@ -50,6 +49,20 @@
 					this._tbl.appendTag(this.value.trim());
 					this.value = '';
 					event.preventDefault();
+					break;
+			}
+		}
+
+		this._leftover.onkeyup = function(event){
+			var BACKSPACEKEY = 8;
+
+			switch (event.keyCode){
+				case BACKSPACEKEY:
+					if (this.value == ''){
+						var tags = this._tbl.getTags();
+						tags[tags.length - 1].focus();
+						event.preventDefault();
+					}
 					break;
 			}
 		}
@@ -142,6 +155,10 @@
 		this._tags.appendChild(tag);
 		return tag;
 	};
+
+	TextboxList.prototype.getTags = function(){
+		return this._tags.childNodes;
+	}
 
 	function createTag(text){
 		var tag = document.createElement('button');
